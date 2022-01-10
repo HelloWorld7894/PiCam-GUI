@@ -15,12 +15,10 @@ def main():
     MainWin = Tk(className="CopernicusPi-main")
 
     # Adjust size
-    MainWin.geometry("320x240")
-    #MainWin.attributes("-fullscreen", True)
+    MainWin.attributes("-fullscreen", True)
     MainWin.configure(bg="white")
 
 LoadingWin = Tk(className="CopernicusPi-loader")
-LoadingWin.geometry("320x240")
 LoadingWin.configure(bg="white")
 
 Logo = Canvas(LoadingWin, width=150, height=150)
@@ -31,7 +29,7 @@ Resized_Img = Img.resize((150, 150))
 Img_Canvas = ImageTk.PhotoImage(Resized_Img)
 Logo.create_image(0, 0, anchor=NW, image=Img_Canvas)
 
-#LoadingWin.attributes("-fullscreen", True)
+LoadingWin.attributes("-fullscreen", True)
 LoadingWin.after(3000, main)
 
 # Execute tkinter
