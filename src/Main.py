@@ -15,15 +15,15 @@ def GetLocation(var, spec_win):
     C.CameraOFF()
 
     if int(var.get()) == 1: #Photograph mode
-        Header = Label(spec_win, text="Photograph mode", font=("Arial", 25)).grid(row=1, column=2)
+        Header = Label(spec_win, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON()
 
     elif int(var.get()) == 2: #Camera settings
-        Header = Label(spec_win, text="Camera settings", font=("Arial", 25)).grid(row=1, column=2)
+        Header = Label(spec_win, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 3: #Image processing
-        Header = Label(spec_win, text="Image processing", font=("Arial", 25)).grid(row=1, column=2)
+        Header = Label(spec_win, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 4: #Images
-        Header = Label(spec_win, text="Images", font=("Arial", 25)).grid(row=1, column=2)
+        Header = Label(spec_win, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
 def main():
     # destroy splash window
@@ -47,7 +47,7 @@ def main():
     for Iter, (text, value) in enumerate(values.items()):
         Radiobutton ( MainWin, text=text, variable=Var,
                       value=value, indicator=0,
-                      background="light blue", height = 5, width = 15).grid(row= Iter + 1, column=1)
+                      background="#0e86d1", height = 5, width = 15).grid(row= Iter + 1, column=1)
 
     GetLocation(Var, MainWin)
     Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, MainWin))
