@@ -47,7 +47,7 @@ def main():
     for Iter, (text, value) in enumerate(values.items()):
         Radiobutton ( MainWin, text=text, variable=Var,
                       value=value, indicator=0,
-                      background="#0e86d1", height = 5, width = 15).grid(row= Iter + 1, column=1)
+                      background="#0e86d1", height = 3, width = 15).grid(row= Iter + 1, column=1)
 
     GetLocation(Var, MainWin)
     Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, MainWin))
