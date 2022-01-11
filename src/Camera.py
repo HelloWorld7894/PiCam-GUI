@@ -34,7 +34,7 @@ def CameraON():
     Button_instance.wait_for_press()
 
     Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
-    Cam.capture("home/pi/CopernicusPi/saved/image" + Folder_Len)
+    Cam.capture("home/pi/CopernicusPi/saved/image" + str(Folder_Len))
 
 def CameraOFF():
     Cam.stop_preview()
