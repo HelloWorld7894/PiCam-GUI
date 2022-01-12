@@ -3,6 +3,8 @@ from tkinter import *
 #Other imports
 from PIL import ImageTk, Image
 import Camera as C
+import RPi.GPIO as GPIO
+import os
 
 """
     MAIN WINDOW
@@ -17,7 +19,9 @@ def GetLocation(var, spec_win):
     if int(var.get()) == 1: #Photograph mode
         Header = Label(spec_win, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON()
-        C.ButtonCheck()
+
+        prev_inpt = 1
+        C.ButtonCheck(spec_win, prev_inpt)
 
     elif int(var.get()) == 2: #Camera settings
         Header = Label(spec_win, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
@@ -25,6 +29,16 @@ def GetLocation(var, spec_win):
         Header = Label(spec_win, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 4: #Images
         Header = Label(spec_win, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
+
+def ButtonCheck(spec_win, prev_inpt):
+    inpt = GPIO.input(5)
+    if ((not prev_inpt) and inpt):
+        Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
+        C.Cam.capture("home/pi/Desktop/image" + str(Folder_Len) + ".jpg")
+
+    spec_win.after(100, ButtonCheck(spec_win, inpt))
+    #Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
+    #Cam.capture("home/pi/CopernicusPi/saved/image" + str(Folder_Len))
 
 def main():
     # destroy splash window
@@ -52,6 +66,10 @@ def main():
 
     GetLocation(Var, MainWin)
     Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, MainWin))
+
+#Button setup
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(5, GPIO.IN)
 
 LoadingWin = Tk(className="CopernicusPi-loader")
 LoadingWin.configure(bg="white")

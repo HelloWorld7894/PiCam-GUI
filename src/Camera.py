@@ -1,14 +1,8 @@
 #Imports
 from picamera import PiCamera
-import RPi.GPIO as GPIO
-import os
 
 #Camera setup
 Cam = PiCamera(sensor_mode=2)
-
-#Button setup
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(5, GPIO.IN)
 
 #Basic Camera setup
 Cam.brightness = 50
@@ -34,16 +28,6 @@ def CameraON():
 
 def CameraOFF():
     Cam.stop_preview()
-
-def ButtonCheck(spec_win, prev_inpt):
-    inpt = GPIO.input(5)
-    if ((not prev_inpt) and inpt):
-        Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
-        Cam.capture("home/pi/Desktop/image" + str(Folder_Len) + ".jpg")
-
-    spec_win.after(100, ButtonCheck(spec_win, inpt))
-    #Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
-    #Cam.capture("home/pi/CopernicusPi/saved/image" + str(Folder_Len))
 
 def CameraOFF():
     Cam.stop_preview()
