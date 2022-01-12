@@ -17,6 +17,7 @@ def GetLocation(var, spec_win):
     if int(var.get()) == 1: #Photograph mode
         Header = Label(spec_win, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON()
+        C.ButtonCheck()
 
     elif int(var.get()) == 2: #Camera settings
         Header = Label(spec_win, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)

@@ -1,6 +1,6 @@
 #Imports
 from picamera import PiCamera
-from gpiozero import Button #I tried manually with GPIO module, but the signal outputting was broken
+import RPi.GPIO as GPIO
 import os
 
 #Camera setup
@@ -31,10 +31,13 @@ def CameraON():
     Cam.resolution = (640, 480)
     Cam.start_preview()
 
-    Button_instance.wait_for_press()
-
-    Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
-    Cam.capture("home/pi/CopernicusPi/saved/image" + Folder_Len)
-
 def CameraOFF():
     Cam.stop_preview()
+
+def ButtonCheck(spec_win, prev_inpt):
+    inpt = GPIO.input(5)
+    if ((not prev_inpt) and inpt):
+        Folder_Len = len([name for name in os.listdir(".") if os.path.isfile(name)])
+        Cam.capture("home/pi/Desktop/image" + str(Folder_Len) + ".jpg")
+
+    spec_win.after(100, ButtonCheck(spec_win, inpt))
