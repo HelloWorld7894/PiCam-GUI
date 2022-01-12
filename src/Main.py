@@ -13,7 +13,7 @@ class MainWin():
     def __init__(self, master):
         self.master = master
         self.master.attributes("-fullscreen", True)
-        self.configure(bg="white")
+        self.master.configure(bg="white")
         self.prev_inpt = 1
 
         Var = StringVar(self.master, "1")
@@ -27,8 +27,8 @@ class MainWin():
                           value=value, indicator=0,
                           background="#0e86d1", height=3, width=15 ).grid ( row=Iter + 1, column=1 )
 
-        GetLocation(Var, MainWin)
-        Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, MainWin))
+        GetLocation(Var, self)
+        Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, self))
 
     def ButtonCheck(self):
         inpt = GPIO.input(5)
@@ -38,24 +38,24 @@ class MainWin():
 
         self.master.after(100, self.ButtonCheck)
 
-def GetLocation(var, spec_win):
+def GetLocation(var, spec_win_parent):
     #variable override
-    for widget in spec_win.winfo_children():
+    for widget in spec_win_parent.master.winfo_children():
         if "radiobutton" not in str(widget):
             widget.destroy()
     C.CameraOFF()
 
     if int(var.get()) == 1: #Photograph mode
-        Header = Label(spec_win, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
+        Header = Label(spec_win_parent.master, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON()
-        spec_win.ButtonCheck()
+        spec_win_parent.master.ButtonCheck()
 
     elif int(var.get()) == 2: #Camera settings
-        Header = Label(spec_win, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
+        Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 3: #Image processing
-        Header = Label(spec_win, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
+        Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 4: #Images
-        Header = Label(spec_win, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
+        Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
 def main():
     # destroy splash window
