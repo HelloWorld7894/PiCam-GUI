@@ -7,7 +7,8 @@ import os
 Cam = PiCamera(sensor_mode=2)
 
 #Button setup
-Button_instance = Button(5) #GPIO on pi 5
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(5, GPIO.IN)
 
 #Basic Camera setup
 Cam.brightness = 50
