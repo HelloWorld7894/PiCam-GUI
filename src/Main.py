@@ -55,7 +55,7 @@ class MainWin():
         ViewWin = Tk(Spec_Path)
         View_File = Image.open(Spec_Path)
         View_File_resized = View_File.resize((300, 300))
-        
+
         Label(ViewWin, image = View_File_resized).pack()
 
         ViewWin.mainloop()
@@ -70,6 +70,13 @@ def GetLocation(var, spec_win_parent):
         C.CameraON()
         spec_win_parent.ButtonCheck()
 
+    elif int(var.get()) == 2: #Camera settings
+        Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
+    elif int(var.get()) == 3: #Image processing
+        Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
+    elif int(var.get()) == 4: #Images
+        Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
+
         for File in os.listdir(SaveDir):
             if os.path.isfile(SaveDir + File):
                 ImgSaved = Image.open(SaveDir + File)
@@ -77,12 +84,6 @@ def GetLocation(var, spec_win_parent):
 
                 ImgButton = Button(spec_win_parent.master, image = ImgSaved, command = spec_win_parent.ViewFile(SaveDir + File))
 
-    elif int(var.get()) == 2: #Camera settings
-        Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
-    elif int(var.get()) == 3: #Image processing
-        Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
-    elif int(var.get()) == 4: #Images
-        Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
 
 def main():
