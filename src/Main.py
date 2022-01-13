@@ -33,8 +33,12 @@ class MainWin():
     def ButtonCheck(self):
         inpt = GPIO.input(5)
         if ((not self.prev_inpt) and inpt):
-            Folder_Len = len ( [name for name in os.listdir ( "." ) if os.path.isfile ( name )] )
-            C.Cam.capture ( "home/pi/Desktop/image" + str ( Folder_Len ) + ".jpg" )
+            Folder_Len = 0
+            for File in os.listdir("/home/pi/CopernicusPi/src/saved"):
+                if os.path.isfile("/home/pi/CopernicusPi/src/saved" + File): Folder_Len += 1
+            C.Cam.capture("/home/pi/CopernicusPi/src/saved" + str(Folder_Len) + ".jpg" )
+
+        self.prev_inpt = inpt
 
         self.master.after(100, self.ButtonCheck)
 
@@ -48,7 +52,7 @@ def GetLocation(var, spec_win_parent):
     if int(var.get()) == 1: #Photograph mode
         Header = Label(spec_win_parent.master, text="Photograph mode", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON()
-        spec_win_parent.master.ButtonCheck()
+        spec_win_parent.ButtonCheck()
 
     elif int(var.get()) == 2: #Camera settings
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
