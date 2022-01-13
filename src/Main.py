@@ -9,6 +9,8 @@ import os
 """
     MAIN WINDOW
 """
+SaveDir = "/home/pi/CopernicusPi/src/saved"
+
 class MainWin():
     def __init__(self, master):
         self.master = master
@@ -34,19 +36,33 @@ class MainWin():
         inpt = GPIO.input(5)
         if ((not self.prev_inpt) and inpt):
             Folder_Len = 0
-            for File in os.listdir("/home/pi/CopernicusPi/src/saved"):
-                if os.path.isfile("/home/pi/CopernicusPi/src/saved" + File): Folder_Len += 1
-            C.Cam.capture("/home/pi/CopernicusPi/src/saved" + str(Folder_Len) + ".jpg" )
+            for File in os.listdir(SaveDir):
+                if os.path.isfile(SaveDir + File): Folder_Len += 1
+            C.Cam.capture(SaveDir + str(Folder_Len) + ".jpg" )
 
         self.prev_inpt = inpt
 
         self.master.after(100, self.ButtonCheck)
 
+    def VariableOverride(self):
+        for widget in self.master.winfo_children():
+            if "radiobutton" not in str(widget):
+                widget.destroy()
+
+    def ViewFile(self, Spec_Path):
+        self.VariableOverride() #variable override
+
+        ViewWin = Tk(Spec_Path)
+        View_File = Image.open(Spec_Path)
+        View_File_resized = View_File.resize((300, 300))
+        
+        Label(ViewWin, image = View_File_resized).pack()
+
+        ViewWin.mainloop()
+
+
 def GetLocation(var, spec_win_parent):
-    #variable override
-    for widget in spec_win_parent.master.winfo_children():
-        if "radiobutton" not in str(widget):
-            widget.destroy()
+    spec_win_parent.VariableOverride() #variable override
     C.CameraOFF()
 
     if int(var.get()) == 1: #Photograph mode
@@ -54,12 +70,20 @@ def GetLocation(var, spec_win_parent):
         C.CameraON()
         spec_win_parent.ButtonCheck()
 
+        for File in os.listdir(SaveDir):
+            if os.path.isfile(SaveDir + File):
+                ImgSaved = Image.open(SaveDir + File)
+                ImgSaved = ImgSaved.resize(50, 50)
+
+                ImgButton = Button(spec_win_parent.master, image = ImgSaved, command = spec_win_parent.ViewFile(SaveDir + File))
+
     elif int(var.get()) == 2: #Camera settings
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 3: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
     elif int(var.get()) == 4: #Images
         Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
+
 
 def main():
     # destroy splash window
