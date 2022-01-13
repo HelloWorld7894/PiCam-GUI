@@ -80,9 +80,10 @@ def GetLocation(var, spec_win_parent):
         for File in os.listdir(SaveDir):
             if os.path.isfile(SaveDir + File):
                 ImgSaved = Image.open(SaveDir + File)
-                ImgSaved = ImgSaved.resize(50, 50)
+                ImgSaved = ImgSaved.resize((50, 50))
+                ImgCanvas = ImageTk.PhotoImage(ImgSaved)
 
-                ImgButton = Button(spec_win_parent.master, image = ImgSaved, command = spec_win_parent.ViewFile(SaveDir + File))
+                ImgButton = Button(spec_win_parent.master, image = ImgCanvas, command = spec_win_parent.ViewFile(SaveDir + File))
 
 
 
