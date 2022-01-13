@@ -9,7 +9,7 @@ import os
 """
     MAIN WINDOW
 """
-SaveDir = "/home/pi/CopernicusPi/src/saved"
+SaveDir = "/home/pi/CopernicusPi/src/saved/"
 
 class MainWin():
     def __init__(self, master):
