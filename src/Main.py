@@ -10,7 +10,6 @@ import os
     MAIN WINDOW
 """
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
-Folder_Len = 0
 
 class MainWin():
     def __init__(self, master):
@@ -36,6 +35,7 @@ class MainWin():
     def ButtonCheck(self):
         inpt = GPIO.input(5)
         if ((not self.prev_inpt) and inpt):
+            Folder_Len = 0
             for File in os.listdir(SaveDir):
                 if os.path.isfile(SaveDir + File): Folder_Len += 1
             C.Cam.capture(SaveDir + str(Folder_Len) + ".jpg" )
@@ -77,8 +77,12 @@ def GetLocation(var, spec_win_parent):
     elif int(var.get()) == 4: #Images
         Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
+        Folder_Len = 0
+        for File in os.listdir ( SaveDir ):
+            if os.path.isfile ( SaveDir + File ): Folder_Len += 1
+
         if Folder_Len == 0:
-            Info = Label(spec_win_parent.master, test="No Images found", bg="white").grid(row=2, column=2)
+            Info = Label(spec_win_parent.master, text="No Images found", bg="white").grid(row=2, column=2)
         else:
             os.system("display " + SaveDir + "0.jpg")
 
