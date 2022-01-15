@@ -30,7 +30,7 @@ class MainWin():
         for Iter, (text, value) in enumerate ( values.items () ):
             Radiobutton (self.master, text=text, variable=Var,
                           value=value, indicator=0,
-                          background="#0e86d1", height=3, width=11).grid ( row=Iter + 1, column=1 )
+                          background="#0e86d1", height=3, width=13).grid ( row=Iter + 1, column=1)
 
         GetLocation(Var, self)
         Var.trace("w", lambda *_, VarInstnc=Var: GetLocation(VarInstnc, self))
