@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.tix import *
 
 #Other imports
 from PIL import ImageTk, Image
@@ -78,32 +79,40 @@ def GetLocation(var, spec_win_parent):
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON_preview()
 
+        frame = Frame(width="320", height="240")
+        frame.pack()
+        SWin = ScrolledWindow(frame, width=320, height=240)
+        SWin.grid(row=0, column=3)
+        Win = SWin.window
+
         Selected_Items = []
 
         #brightness
-        BrightScale = Scale ( spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=2, column=2)
+        BrightScale = Scale(Win, label="brightness", from_=0, to=100, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=2, column=2, padx=5)
         #sharpness
-        SharpScale = Scale ( spec_win_parent.master, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=3, column=2)
+        SharpScale = Scale(Win, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=3, column=2, padx=5)
         #contrast
-        ContrastScale = Scale ( spec_win_parent.master, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=4, column=2)
+        ContrastScale = Scale(Win, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=4, column=2, padx=5)
         #saturation
-        SaturationScale = Scale ( spec_win_parent.master, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=5, column=2)
+        SaturationScale = Scale(Win, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=5, column=2, padx=5)
         #iso
-        IsoScale = Scale ( spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=6, column=2)
+        IsoScale = Scale(Win, label="ISO", from_=100, to=800, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=6, column=2, padx=5)
         #exposure_compensation
-        ExpCompScale = Scale ( spec_win_parent.master, label="exposure compensation", from_=-25, to=25, orient=HORIZONTAL,
-                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=7, column=2)
+        ExpCompScale = Scale(Win, label="exposure compensation", from_=-25, to=25, orient=HORIZONTAL,
+                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=7, column=2, padx=5)
+
+
 
         #TODO: Dodělat!
         #shutter_speed
