@@ -11,7 +11,34 @@ import os
     MAIN WINDOW
 """
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
-Selected_Items = []
+# set to default variables
+Camera_Settings = [50, #brightness
+                   0, #sharpness
+                   0, #contrast
+                   0, #saturation
+                   0, #iso
+                   0, #exposure compensation
+                   1000, #shutter speed (default)
+                   "auto", #exposure mode
+                   "average", #meter mode
+                   "auto", #awb mode
+                   90, #rotation (default always)
+                   False, #hflip (default always)
+                   False, #vflip (default always)
+                   (0.0, 0.0, 1.0, 1.0), #crop (default always)
+                   30 #framerate
+                   #TODO: Add resolution!!!
+                   ]
+C.Load_Settings(Camera_Settings) #Default load
+
+#values for settings 1
+BrightnessVal = SharpnessVal = ContrastVal = SaturationVal = DoubleVar()
+#values for settings 2
+IsoVar = Exposure_compensationVal = ShutterSpeedVal = DoubleVar()
+ExposureVar = "auto"
+#values for settings 3
+MeterVar, AwbVar = "average", "auto"
+#TODO: Dodělat i resolution
 
 class MainWin():
     def __init__(self, master):
@@ -23,9 +50,11 @@ class MainWin():
 
         Var = StringVar(self.master, "1")
         values = {"Photo ": "1",
-                  "Camera Settings": "2",
-                  "Image Processing": "3",
-                  "Images": "4"}
+                  "Camera Setting 1": "2",
+                  "Camera Setting 2": "3",
+                  "Camera Setting 3": "4",
+                  "Image Processing": "5",
+                  "Images": "6"}
 
         for Iter, (text, value) in enumerate ( values.items () ):
             Radiobutton (self.master, text=text, variable=Var,
@@ -63,8 +92,12 @@ class MainWin():
 
         ViewWin.mainloop()
 
-def Selection(var):
-    Selected_Items.append(var)
+def Get_and_Load():
+    Data = [BrightnessVal, SharpnessVal, ContrastVal, SaturationVal, IsoVar,
+            Exposure_compensationVal, ShutterSpeedVal, ExposureVar, MeterVar, AwbVar,
+            90, False, False, (0.0, 0.0, 1.0, 1.0), 30] #Default parameters
+            #TODO: Add resolution!
+    C.Load_Settings(Data)
 
 def GetLocation(var, spec_win_parent):
     spec_win_parent.VariableOverride() #variable override
@@ -75,63 +108,109 @@ def GetLocation(var, spec_win_parent):
         C.CameraON()
         spec_win_parent.ButtonCheck()
 
-    elif int(var.get()) == 2: #Camera settings
+    elif int(var.get()) == 2: #Camera setting 1
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON_preview()
-        Selected_Items = []
 
         #brightness
         BrightScale = Scale(spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=2, column=2, padx=0)
+                              variable=BrightnessVal).grid(row=2, column=2, padx=0)
         #sharpness
         SharpScale = Scale(spec_win_parent.master, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=3, column=2, padx=0)
+                              variable=SharpnessVal).grid(row=3, column=2, padx=0)
         #contrast
         ContrastScale = Scale(spec_win_parent.master, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=4, column=2, padx=0)
+                              variable=ContrastVal).grid(row=4, column=2, padx=0)
         #saturation
         SaturationScale = Scale(spec_win_parent.master, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=5, column=2, padx=0)
-        #iso
-        IsoScale = Scale(spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
-                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=6, column=2, padx=0)
-        #exposure_compensation
-        ExpCompScale = Scale(spec_win_parent.master, label="exposure compensation", from_=-25, to=25, orient=HORIZONTAL,
-                              length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=7, column=2, padx=0)
+                              variable=SaturationVal).grid(row=5, column=2, padx=0)
 
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=6, column=3)
 
+    elif int(var.get()) == 3: #Camera setting 2
+        Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
+        C.CameraON_preview()
 
+        # iso
+        IsoScale = Scale ( spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
+                           length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                           variable=IsoVar).grid ( row=2, column=2, padx=0 )
+        # exposure_compensation
+        ExpCompScale = Scale ( spec_win_parent.master, label="exposure compensation", from_=-25, to=25,
+                               orient=HORIZONTAL,
+                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                               variable=Exposure_compensationVal).grid(row=3, column=2, padx=0)
+        # shutter_speed
+        ShutterSpeedScale = Scale(spec_win_parent.master, label="shutter speed", from_=200, to=6000000,
+                                  orient=HORIZONTAL,
+                                  length=110, showvalue=0, tickinterval=2, resolution=0.01,
+                                  variable=ShutterSpeedVal).grid(row=4, column=2, padx=0)
+
+        #Variable resetting
+        ExposureVar = StringVar(spec_win_parent.master, "1")
+
+        # exposure_mode
+        ExposureMode_Values = {"auto": "1",
+                               "off": "2",
+                               "night": "3",
+                               "backlight": "4",
+                               "sports": "5",
+                               "snow": "6",
+                               "beach": "7",
+                               "verylong": "8",
+                               "antishake": "9"}
+        for Iter, (text, value) in enumerate(ExposureMode_Values.items()):
+            Radiobutton(spec_win_parent.master, text=text, variable=ExposureVar,
+                        value=value, indicator=0,
+                        background="#0e86d1", height=2, width=3).grid(row=5, column=Iter + 1)
+
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=8, column=3)
+
+    elif int(var.get()) == 4: #Camera Setting 3
+        Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2 )
+        C.CameraON_preview()
+
+        #Variable resetting
+        MeterVar, AwbVar = StringVar(spec_win_parent.master, "1")
+
+        # meter_mode
+        MeterMode_Values = {"average": "1",
+                            "spot": "2",
+                            "backlit": "3",
+                            "matrix": "4"}
+        for Iter, (text, value) in enumerate(MeterMode_Values.items()):
+            Radiobutton(spec_win_parent.master, text=text, variable=MeterVar,
+                        value=value, indicator=0,
+                        background="#0e86d1", height=2, width=3).grid(row=1, column=Iter + 1)
+        # awb_mode
+        AwbMode_Values = {"off": "1",
+                          "auto": "2",
+                          "sunlight": "3",
+                          "cloudy": "4",
+                          "shade": "5",
+                          "tungsten": "6",
+                          "fluor": "7",
+                          "incan": "8",
+                          "flash": "9",
+                          "horizon": "10"}
+        for Iter, (text, value) in enumerate(AwbMode_Values.items()):
+            Radiobutton(spec_win_parent.master, text=text, variable=AwbVar,
+                        value=value, indicator=0,
+                        background="#0e86d1", height=2, width=3).grid(row=2, column=Iter + 1)
+        # resolution
         #TODO: Dodělat!
-        #shutter_speed
-        #exposure_mode
-        #meter_mode
-        #awb_mode
-        #resolution
 
-        #Applying elements from selection
-        C.Cam.brightness = Selected_Items[0]
-        C.Cam.sharpness = Selected_Items[1]
-        C.Cam.contrast = Selected_Items[2]
-        C.Cam.saturation = Selected_Items[3]
-        C.Cam.iso = Selected_Items[4]
-        C.Cam.exposure_compensation = Selected_Items[5]
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load ).grid (row=4, column=3)
 
-        #Scroll = Scrollbar(spec_win_parent.master, orient="vertical", command=)
-        #Scroll.grid(row=0, column=3, sticky="ns")
-
-
-    elif int(var.get()) == 3: #Image processing
+    elif int(var.get()) == 5: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
         #NOT STILL DONE YET
-        #TODO: Dodělat!
-    elif int(var.get()) == 4: #Images
+    elif int(var.get()) == 6: #Images
         Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
         Folder_Len = 0
