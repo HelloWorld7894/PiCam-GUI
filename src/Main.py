@@ -120,8 +120,8 @@ def GetLocation(var, spec_win_parent):
         C.Cam.iso = Selected_Items[4]
         C.Cam.exposure_compensation = Selected_Items[5]
 
-        Scroll = Scrollbar(spec_win_parent.master, orient="vertical", command=)
-        Scroll.grid(row=0, column=3, sticky="ns")
+        #Scroll = Scrollbar(spec_win_parent.master, orient="vertical", command=)
+        #Scroll.grid(row=0, column=3, sticky="ns")
 
 
 
