@@ -10,6 +10,7 @@ import os
     MAIN WINDOW
 """
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
+Selected_Items = []
 
 class MainWin():
     def __init__(self, master):
@@ -17,6 +18,7 @@ class MainWin():
         self.master.attributes("-fullscreen", True)
         self.master.configure(bg="white")
         self.prev_inpt = 1
+        self.InvokeInterrupt = 0
 
         Var = StringVar(self.master, "1")
         values = {"Photo ": "1",
@@ -60,6 +62,8 @@ class MainWin():
 
         ViewWin.mainloop()
 
+def Selection(var):
+    Selected_Items.append(var)
 
 def GetLocation(var, spec_win_parent):
     spec_win_parent.VariableOverride() #variable override
@@ -72,8 +76,54 @@ def GetLocation(var, spec_win_parent):
 
     elif int(var.get()) == 2: #Camera settings
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
+        C.CameraON_preview()
+
+        Selected_Items = []
+
+        #brightness
+        BrightScale = Scale ( spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=2, column=2)
+        #sharpness
+        SharpScale = Scale ( spec_win_parent.master, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=3, column=2)
+        #contrast
+        ContrastScale = Scale ( spec_win_parent.master, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=4, column=2)
+        #saturation
+        SaturationScale = Scale ( spec_win_parent.master, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=5, column=2)
+        #iso
+        IsoScale = Scale ( spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=6, column=2)
+        #exposure_compensation
+        ExpCompScale = Scale ( spec_win_parent.master, label="exposure compensation", from_=-25, to=25, orient=HORIZONTAL,
+                              length=150, showvalue=0, tickinterval=2, resolution=0.01,
+                              command=Selection).grid(row=7, column=2)
+
+        #TODO: Dodělat!
+        #exposure_mode
+        #meter_mode
+        #awb_mode
+        #resolution
+
+        #Applying elements from selection
+        C.Cam.brightness = Selected_Items[0]
+        C.Cam.sharpness = Selected_Items[1]
+        C.Cam.contrast = Selected_Items[2]
+        C.Cam.saturation = Selected_Items[3]
+        C.Cam.iso = Selected_Items[4]
+        C.Cam.exposure_compensation = Selected_Items[5]
+
     elif int(var.get()) == 3: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
+
+        #NOT STILL DONE YET
+        #TODO: Dodělat!
     elif int(var.get()) == 4: #Images
         Header = Label(spec_win_parent.master, text="Images", font=("Arial", 25), bg="white").grid(row=1, column=2)
 
@@ -84,7 +134,11 @@ def GetLocation(var, spec_win_parent):
         if Folder_Len == 0:
             Info = Label(spec_win_parent.master, text="No Images found", bg="white").grid(row=2, column=2)
         else:
-            os.system("display " + SaveDir + "0.jpg")
+            #NOT STILL DONE YET
+            # TODO: Dodělat!
+            for File in os.listdir ( SaveDir ):
+                if os.path.isfile ( SaveDir + File ):
+                    pass
 
 
 

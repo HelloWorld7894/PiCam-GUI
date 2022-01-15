@@ -26,6 +26,12 @@ def CameraON():
     Cam.resolution = (640, 480)
     Cam.start_preview()
 
+def CameraON_preview():
+    Cam.preview_fullscreen = False
+    Cam.preview_window = (200, 40, 80, 80)
+    Cam.resolution = (640, 480)
+    Cam.start_preview()
+
 def CameraOFF():
     Cam.stop_preview()
 
