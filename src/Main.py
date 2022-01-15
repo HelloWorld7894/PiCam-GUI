@@ -83,27 +83,27 @@ def GetLocation(var, spec_win_parent):
         #brightness
         BrightScale = Scale(spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=2, column=2, padx=5)
+                              command=Selection).grid(row=2, column=1, padx=75)
         #sharpness
         SharpScale = Scale(spec_win_parent.master, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=3, column=2, padx=5)
+                              command=Selection).grid(row=3, column=1, padx=75)
         #contrast
         ContrastScale = Scale(spec_win_parent.master, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=4, column=2, padx=5)
+                              command=Selection).grid(row=4, column=1, padx=75)
         #saturation
         SaturationScale = Scale(spec_win_parent.master, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=5, column=2, padx=5)
+                              command=Selection).grid(row=5, column=1, padx=75)
         #iso
         IsoScale = Scale(spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=6, column=2, padx=5)
+                              command=Selection).grid(row=6, column=1, padx=75)
         #exposure_compensation
         ExpCompScale = Scale(spec_win_parent.master, label="exposure compensation", from_=-25, to=25, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
-                              command=Selection).grid(row=7, column=2, padx=5)
+                              command=Selection).grid(row=7, column=1, padx=75)
 
 
 
@@ -124,7 +124,6 @@ def GetLocation(var, spec_win_parent):
 
         #Scroll = Scrollbar(spec_win_parent.master, orient="vertical", command=)
         #Scroll.grid(row=0, column=3, sticky="ns")
-
 
 
     elif int(var.get()) == 3: #Image processing
