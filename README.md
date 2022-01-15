@@ -15,9 +15,14 @@ this command disables cursor! don´t use if you don´t have touchscreen attached
 sudo nano /etc/lightdm/lightdm.conf
 xserver-command = X -nocursor #add into file
 ```
-### Install required packages
+### Install required frameworks
 ```
 pip3 install Pillow, picamera
+```
+
+### Install required packages
+```
+sudo apt install tix-dev
 ```
 
 ## Run
