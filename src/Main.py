@@ -12,10 +12,6 @@ import os
 """
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
 
-BrightScale, SharpScale, ContrastScale, SaturationScale = None, None, None, None
-IsoScale, ExpCompScale, ShutterSpeedScale, ExposureVar = None, None, None, None
-MeterVar, AwbVar = None, None
-
 # set to default variables
 Camera_Settings = [50, #brightness
                    0, #sharpness
@@ -36,7 +32,7 @@ Camera_Settings = [50, #brightness
                    ]
 C.Load_Settings(Camera_Settings) #Default load
 
-class MainWin():
+class MainWin:
     def __init__(self, master):
         self.master = master
         self.master.attributes("-fullscreen", True)
@@ -88,14 +84,35 @@ class MainWin():
 
         ViewWin.mainloop()
 
-def Get_and_Load(Data):
+def Change_setting1(Bright, Sharp, Contrast, Saturation):
     #Data = [BrightnessScale.get(), SharpnessScale.get(), ContrastScale.get(), SaturationScale.get(), IsoScale.get(),
     #        Exposure_compensationScale.get(), ShutterSpeedScale.get(), ExposureScale,
     #        MeterScale, AwbScale,
     #        90, False, False, (0.0, 0.0, 1.0, 1.0), 30] #Default parameters
             #TODO: Add resolution!
-    print(Data)
-    C.Load_Settings(Data)
+
+    Camera_Settings[0] = Bright.get()
+    Camera_Settings[1] = Sharp.get()
+    Camera_Settings[2] = Contrast.get()
+    Camera_Settings[3] = Saturation.get()
+
+    C.Load_Settings(Camera_Settings)
+
+def Change_setting2(Iso, ExpComp, ShutterSpeed, Exposure):
+    Camera_Settings[4] = Iso.get()
+    Camera_Settings[5] = ExpComp.get()
+    Camera_Settings[6] = ShutterSpeed.get()
+    Camera_Settings[7] = Exposure.get()
+
+    C.Load_Settings(Camera_Settings)
+
+def Change_setting3(Meter, Awb):
+    Camera_Settings[8] = Meter.get()
+    Camera_Settings[9] = Awb.get()
+
+    C.Load_Settings(Camera_Settings)
+
+
 
 def GetLocation(var, spec_win_parent):
     spec_win_parent.VariableOverride() #variable override
@@ -127,12 +144,8 @@ def GetLocation(var, spec_win_parent):
                               length=110)
         SaturationScale.grid(row=5, column=2, padx=0)
 
-        Camera_Settings[0] = BrightScale.get()
-        Camera_Settings[1] = SharpScale.get()
-        Camera_Settings[2] = ContrastScale.get()
-        Camera_Settings[3] = SaturationScale.get()
-
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load(Camera_Settings)).grid(row=1, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Change_setting1(BrightScale, SharpScale,
+                                                                                   ContrastScale, SaturationScale)).grid(row=1, column=3)
     elif int(var.get()) == 3: #Camera setting 2
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
         C.CameraON_preview()
@@ -170,12 +183,8 @@ def GetLocation(var, spec_win_parent):
                         value=value, indicator=0,
                         background="#0e86d1", height=2, width=3).grid(row=5, column=Iter + 1)
 
-        Camera_Settings[4] = IsoScale.get()
-        Camera_Settings[5] = ExpCompScale.get()
-        Camera_Settings[6] = ShutterSpeedScale.get()
-        Camera_Settings[7] = ExposureVar.get()
-
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load(Camera_Settings)).grid(row=1, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Change_setting2(IsoScale, ExpCompScale,
+                                                                                   ShutterSpeedScale, ExposureVar)).grid(row=1, column=3)
 
     elif int(var.get()) == 4: #Camera Setting 3
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2 )
@@ -212,10 +221,7 @@ def GetLocation(var, spec_win_parent):
         # resolution
         #TODO: Dodělat resolution!
 
-        Camera_Settings[8] = MeterVar.get()
-        Camera_Settings[9] = AwbVar.get()
-
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load(Camera_Settings)).grid(row=1, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Change_setting3(MeterVar, AwbVar)).grid(row=1, column=3)
 
     elif int(var.get()) == 5: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
