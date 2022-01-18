@@ -173,7 +173,7 @@ def GetLocation(var, spec_win_parent):
         Camera_Settings[4] = IsoScale.get()
         Camera_Settings[5] = ExpCompScale.get()
         Camera_Settings[6] = ShutterSpeedScale.get()
-        Camera_Settings[7] = ExposureVar
+        Camera_Settings[7] = ExposureVar.get()
 
         Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load(Camera_Settings)).grid(row=1, column=3)
 
@@ -212,8 +212,8 @@ def GetLocation(var, spec_win_parent):
         # resolution
         #TODO: Dodělat resolution!
 
-        Camera_Settings[8] = MeterVar
-        Camera_Settings[9] = AwbVar
+        Camera_Settings[8] = MeterVar.get()
+        Camera_Settings[9] = AwbVar.get()
 
         Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load(Camera_Settings)).grid(row=1, column=3)
 
