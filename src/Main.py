@@ -11,17 +11,27 @@ import os
     MAIN WINDOW
 """
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
+
+#values for settings 1
+BrightnessVal, SharpnessVal, ContrastVal, SaturationVal = 50, 0, 0, 0
+#values for settings 2
+IsoVar, Exposure_compensationVal, ShutterSpeedVal = 0, 0, 1000
+ExposureVar = "auto"
+#values for settings 3
+MeterVar, AwbVar = "average", "auto"
+#TODO: Dodělat i resolution
+
 # set to default variables
-Camera_Settings = [50, #brightness
-                   0, #sharpness
-                   0, #contrast
-                   0, #saturation
-                   0, #iso
-                   0, #exposure compensation
-                   1000, #shutter speed (default)
-                   "auto", #exposure mode
-                   "average", #meter mode
-                   "auto", #awb mode
+Camera_Settings = [BrightnessVal, #brightness
+                   SharpnessVal, #sharpness
+                   ContrastVal, #contrast
+                   SaturationVal, #saturation
+                   IsoVar, #iso
+                   Exposure_compensationVal, #exposure compensation
+                   ShutterSpeedVal, #shutter speed (default)
+                   ExposureVar, #exposure mode
+                   MeterVar, #meter mode
+                   AwbVar, #awb mode
                    90, #rotation (default always)
                    False, #hflip (default always)
                    False, #vflip (default always)
@@ -30,15 +40,6 @@ Camera_Settings = [50, #brightness
                    #TODO: Add resolution!!!
                    ]
 C.Load_Settings(Camera_Settings) #Default load
-
-#values for settings 1
-BrightnessVal = SharpnessVal = ContrastVal = SaturationVal = DoubleVar()
-#values for settings 2
-IsoVar = Exposure_compensationVal = ShutterSpeedVal = DoubleVar()
-ExposureVar = "auto"
-#values for settings 3
-MeterVar, AwbVar = "average", "auto"
-#TODO: Dodělat i resolution
 
 class MainWin():
     def __init__(self, master):
@@ -112,6 +113,8 @@ def GetLocation(var, spec_win_parent):
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON_preview()
 
+        BrightnessVal = SharpnessVal = ContrastVal = SaturationVal = DoubleVar(spec_win_parent.master)
+
         #brightness
         BrightScale = Scale(spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
@@ -134,6 +137,8 @@ def GetLocation(var, spec_win_parent):
     elif int(var.get()) == 3: #Camera setting 2
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
         C.CameraON_preview()
+
+        IsoVar = Exposure_compensationVal = ShutterSpeedVal = DoubleVar(spec_win_parent.master)
 
         # iso
         IsoScale = Scale ( spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
@@ -175,7 +180,7 @@ def GetLocation(var, spec_win_parent):
         C.CameraON_preview()
 
         #Variable resetting
-        MeterVar, AwbVar = StringVar(spec_win_parent.master, "1")
+        MeterVar = AwbVar = StringVar(spec_win_parent.master, "1")
 
         # meter_mode
         MeterMode_Values = {"average": "1",
