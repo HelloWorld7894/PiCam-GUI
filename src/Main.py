@@ -113,7 +113,10 @@ def GetLocation(var, spec_win_parent):
         Header = Label(spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white").grid(row=1, column=2)
         C.CameraON_preview()
 
-        BrightnessVal = SharpnessVal = ContrastVal = SaturationVal = DoubleVar(spec_win_parent.master)
+        BrightnessVal = DoubleVar(spec_win_parent.master)
+        SharpnessVal = DoubleVar(spec_win_parent.master)
+        ContrastVal = DoubleVar(spec_win_parent.master)
+        SaturationVal = DoubleVar(spec_win_parent.master)
 
         #brightness
         BrightScale = Scale(spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
@@ -132,13 +135,15 @@ def GetLocation(var, spec_win_parent):
                               length=110, showvalue=0, tickinterval=2, resolution=0.01,
                               variable=SaturationVal).grid(row=5, column=2, padx=0)
 
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=6, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=1, column=3)
 
     elif int(var.get()) == 3: #Camera setting 2
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
         C.CameraON_preview()
 
-        IsoVar = Exposure_compensationVal = ShutterSpeedVal = DoubleVar(spec_win_parent.master)
+        IsoVar = DoubleVar(spec_win_parent.master)
+        Exposure_compensationVal = DoubleVar(spec_win_parent.master)
+        ShutterSpeedVal = DoubleVar(spec_win_parent.master)
 
         # iso
         IsoScale = Scale ( spec_win_parent.master, label="ISO", from_=100, to=800, orient=HORIZONTAL,
@@ -173,14 +178,15 @@ def GetLocation(var, spec_win_parent):
                         value=value, indicator=0,
                         background="#0e86d1", height=2, width=3).grid(row=5, column=Iter + 1)
 
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=8, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load).grid(row=1, column=3)
 
     elif int(var.get()) == 4: #Camera Setting 3
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2 )
         C.CameraON_preview()
 
         #Variable resetting
-        MeterVar = AwbVar = StringVar(spec_win_parent.master, "1")
+        MeterVar = StringVar(spec_win_parent.master, "1")
+        AwbVar = StringVar(spec_win_parent.master, "1")
 
         # meter_mode
         MeterMode_Values = {"average": "1",
@@ -209,7 +215,7 @@ def GetLocation(var, spec_win_parent):
         # resolution
         #TODO: Dodělat!
 
-        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load ).grid (row=4, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Get_and_Load ).grid (row=1, column=3)
 
     elif int(var.get()) == 5: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
