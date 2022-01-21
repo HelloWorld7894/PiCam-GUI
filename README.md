@@ -1,5 +1,7 @@
 # CopernicusPi
 
+![Could not load CopernicusPi logo](https://github.com/HelloWorld7894/CopernicusPi/blob/main/src/gui/CopernicusPi.png?raw=true)
+
 a simple camera software developed in python-tkinter for Raspberry Pi with RPi HQ camera
 
 ## Installation
