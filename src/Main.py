@@ -10,6 +10,9 @@ import os
 """
     MAIN WINDOW
 """
+
+global BrightScale, SharpScale, ContrastScale, SaturationScale
+
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
 
 # set to default variables
@@ -84,17 +87,17 @@ class MainWin:
 
         ViewWin.mainloop()
 
-def Change_setting1(Bright, Sharp, Contrast, Saturation):
+def Change_setting1():
     #Data = [BrightnessScale.get(), SharpnessScale.get(), ContrastScale.get(), SaturationScale.get(), IsoScale.get(),
     #        Exposure_compensationScale.get(), ShutterSpeedScale.get(), ExposureScale,
     #        MeterScale, AwbScale,
     #        90, False, False, (0.0, 0.0, 1.0, 1.0), 30] #Default parameters
             #TODO: Add resolution!
 
-    Camera_Settings[0] = Bright.get()
-    Camera_Settings[1] = Sharp.get()
-    Camera_Settings[2] = Contrast.get()
-    Camera_Settings[3] = Saturation.get()
+    Camera_Settings[0] = BrightScale.get()
+    Camera_Settings[1] = SharpScale.get()
+    Camera_Settings[2] = ContrastScale.get()
+    Camera_Settings[3] = SaturationScale.get()
 
     C.Load_Settings(Camera_Settings)
 
@@ -144,8 +147,7 @@ def GetLocation(var, spec_win_parent):
                               length=110)
         SaturationScale.grid(row=5, column=2, padx=0)
 
-        Save = Button(spec_win_parent.master, text="Save", command=Change_setting1(BrightScale, SharpScale,
-                                                                                   ContrastScale, SaturationScale)).grid(row=1, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Change_setting1).grid(row=1, column=3)
     elif int(var.get()) == 3: #Camera setting 2
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
         C.CameraON_preview()
