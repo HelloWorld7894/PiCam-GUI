@@ -131,23 +131,28 @@ def GetLocation(var, spec_win_parent):
         C.CameraON_preview()
 
         #brightness
+        global BrightScale
         BrightScale = Scale(spec_win_parent.master, label="brightness", from_=0, to=100, orient=HORIZONTAL,
                               length=110)
         BrightScale.grid(row=2, column=2, padx=0)
         #sharpness
+        global SharpScale
         SharpScale = Scale(spec_win_parent.master, label="sharpness", from_=-100, to=100, orient=HORIZONTAL,
                               length=110)
         SharpScale.grid(row=3, column=2, padx=0)
         #contrast
+        global ContrastScale
         ContrastScale = Scale(spec_win_parent.master, label="contrast", from_=-100, to=100, orient=HORIZONTAL,
                               length=110)
         ContrastScale.grid(row=4, column=2, padx=0)
         #saturation
+        global SaturationScale
         SaturationScale = Scale(spec_win_parent.master, label="saturation", from_=-100, to=100, orient=HORIZONTAL,
                               length=110)
         SaturationScale.grid(row=5, column=2, padx=0)
 
         Save = Button(spec_win_parent.master, text="Save", command=Change_setting1).grid(row=1, column=3)
+        
     elif int(var.get()) == 3: #Camera setting 2
         Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2)
         C.CameraON_preview()
