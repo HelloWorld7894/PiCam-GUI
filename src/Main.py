@@ -240,7 +240,7 @@ def GetLocation(var, spec_win_parent):
         # resolution
         #TODO: Dodělat resolution!
 
-        Save = Button(spec_win_parent.master, text="Save", command=Change_setting3(MeterVar, AwbVar)).grid(row=1, column=3)
+        Save = Button(spec_win_parent.master, text="Save", command=Change_setting3).grid(row=1, column=3)
 
     elif int(var.get()) == 5: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
