@@ -12,8 +12,7 @@ import os
 """
 
 global BrightScale, SharpScale, ContrastScale, SaturationScale #Settings 1
-global IsoScale, ExpCompScale, ShutterSpeedScale, ExposureVar #Settings 2
-global MeterVar, AwbVar #Settings 3
+global IsoScale, ExpCompScale, ShutterSpeedScale #Settings 2
 
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
 
@@ -49,9 +48,8 @@ class MainWin:
         values = {"Photo ": "1",
                   "Camera Setting 1": "2",
                   "Camera Setting 2": "3",
-                  "Camera Setting 3": "4",
-                  "Image Processing": "5",
-                  "Images": "6"}
+                  "Image Processing": "4",
+                  "Images": "5"}
 
         for Iter, (text, value) in enumerate ( values.items () ):
             Radiobutton (self.master, text=text, variable=Var,
@@ -107,17 +105,8 @@ def Change_setting2():
     Camera_Settings[4] = IsoScale.get()
     Camera_Settings[5] = ExpCompScale.get()
     Camera_Settings[6] = ShutterSpeedScale.get()
-    Camera_Settings[7] = ExposureVar.get()
 
     C.Load_Settings(Camera_Settings)
-
-def Change_setting3():
-    Camera_Settings[8] = MeterVar.get()
-    Camera_Settings[9] = AwbVar.get()
-
-    C.Load_Settings(Camera_Settings)
-
-
 
 def GetLocation(var, spec_win_parent):
     spec_win_parent.VariableOverride() #variable override
@@ -181,66 +170,7 @@ def GetLocation(var, spec_win_parent):
                                   orient=HORIZONTAL,
                                   length=110)
         ShutterSpeedScale.grid(row=4, column=2, padx=0)
-
-        #Variable resetting
-        global ExposureVar
-        ExposureVar = StringVar(spec_win_parent.master, "1")
-
-        # exposure_mode
-        ExposureMode_Values = {"auto": "1",
-                               "off": "2",
-                               "night": "3",
-                               "backlight": "4",
-                               "sports": "5",
-                               "snow": "6",
-                               "beach": "7",
-                               "verylong": "8",
-                               "antishake": "9"}
-        for Iter, (text, value) in enumerate(ExposureMode_Values.items()):
-            Radiobutton(spec_win_parent.master, text=text, variable=ExposureVar,
-                        value=value, indicator=0,
-                        background="#0e86d1", height=2, width=3).grid(row=5, column=Iter + 1)
-
         Save = Button(spec_win_parent.master, text="Save", command=Change_setting2).grid(row=1, column=3)
-
-    elif int(var.get()) == 4: #Camera Setting 3
-        Header = Label ( spec_win_parent.master, text="Camera settings", font=("Arial", 25), bg="white" ).grid(row=1, column=2 )
-        C.CameraON_preview()
-
-        #Variable resetting
-        global MeterVar
-        MeterVar = StringVar(spec_win_parent.master, "1")
-        global AwbVar
-        AwbVar = StringVar(spec_win_parent.master, "1")
-
-        # meter_mode
-        MeterMode_Values = {"average": "1",
-                            "spot": "2",
-                            "backlit": "3",
-                            "matrix": "4"}
-        for Iter, (text, value) in enumerate(MeterMode_Values.items()):
-            Radiobutton(spec_win_parent.master, text=text, variable=MeterVar,
-                        value=value, indicator=0,
-                        background="#0e86d1", height=2, width=3).grid(row=1, column=Iter + 1)
-        # awb_mode
-        AwbMode_Values = {"off": "1",
-                          "auto": "2",
-                          "sunlight": "3",
-                          "cloudy": "4",
-                          "shade": "5",
-                          "tungsten": "6",
-                          "fluor": "7",
-                          "incan": "8",
-                          "flash": "9",
-                          "horizon": "10"}
-        for Iter, (text, value) in enumerate(AwbMode_Values.items()):
-            Radiobutton(spec_win_parent.master, text=text, variable=AwbVar,
-                        value=value, indicator=0,
-                        background="#0e86d1", height=2, width=3).grid(row=2, column=Iter + 1)
-        # resolution
-        #TODO: Dodělat resolution!
-
-        Save = Button(spec_win_parent.master, text="Save", command=Change_setting3).grid(row=1, column=3)
 
     elif int(var.get()) == 5: #Image processing
         Header = Label(spec_win_parent.master, text="Image processing", font=("Arial", 25), bg="white").grid(row=1, column=2)
