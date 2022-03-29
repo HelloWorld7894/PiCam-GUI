@@ -16,25 +16,26 @@ global IsoScale, ExpCompScale, ShutterSpeedScale  # Settings 2
 SaveDir = "/home/pi/CopernicusPi/src/saved/"
 
 # set to default variables
-Camera_Settings = [50, #brightness
-                   0, #sharpness
-                   0, #contrast
-                   0, #saturation
-                   0, #iso
-                   0, #exposure compensation
-                   1000, #shutter speed (default)
-                   "auto", #exposure mode
-                   "average", #meter mode
-                   "auto", #awb mode
-                   90, #rotation (default always)
-                   False, #hflip (default always)
-                   False, #vflip (default always)
-                   (0.0, 0.0, 1.0, 1.0), #crop (default always)
-                   30 #framerate
-                   #TODO: Add resolution!!!
-                   ]
-C.Load_Settings(Camera_Settings)  # Default load
+Camera_Settings = {
+    "brightness": 50,
+    "sharpness": 0,
+    "contrast": 0,
+    "saturation": 0,
+    "iso": 0,
+    "exposure_compensation": 0,
+    "shutter_speed": 1000,
+    "exposure_mode": "auto",
+    "meter_mode": "average",
+    "awb_mode": "auto",
+    "rotation": 90,  # (default always)
+    "hflip": False,  # (default always)
+    "vflip": False,  # (default always)
+    "crop": (0.0, 0.0, 1.0, 1.0),  # (default always)
+    "framerate": 30,
+    # TODO: Add resolution!!!
+}
 
+C.Load_Settings(Camera_Settings) # Default load
 
 
 class MainWin:
@@ -95,20 +96,20 @@ def Change_setting1():
     #        Exposure_compensationScale.get(), ShutterSpeedScale.get(), ExposureScale,
     #        MeterScale, AwbScale,
     #        90, False, False, (0.0, 0.0, 1.0, 1.0), 30] #Default parameters
-            #TODO: Add resolution!
+            # TODO: Add resolution!
 
-    Camera_Settings[0] = BrightScale.get()
-    Camera_Settings[1] = SharpScale.get()
-    Camera_Settings[2] = ContrastScale.get()
-    Camera_Settings[3] = SaturationScale.get()
+    Camera_Settings["brightness"] = BrightScale.get()
+    Camera_Settings["sharpness"] = SharpScale.get()
+    Camera_Settings["contrast"] = ContrastScale.get()
+    Camera_Settings["saturation"] = SaturationScale.get()
 
     C.Load_Settings(Camera_Settings)
 
 
 def Change_setting2():
-    Camera_Settings[4] = IsoScale.get()
-    Camera_Settings[5] = ExpCompScale.get()
-    Camera_Settings[6] = ShutterSpeedScale.get()
+    Camera_Settings["iso"] = IsoScale.get()
+    Camera_Settings["exposure_compensation"] = ExpCompScale.get()
+    Camera_Settings["shutter_speed"] = ShutterSpeedScale.get()
 
     C.Load_Settings(Camera_Settings)
 
