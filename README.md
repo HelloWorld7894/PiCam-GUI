@@ -28,5 +28,6 @@ sudo apt install tix-dev
 ```
 
 ## Run
-
-just run the `python3 Main.py`, file can be found in /CopernicusPi/src/
+```sh
+./src/Main.py
+```

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """MAIN WINDOW."""
 
 from tkinter import *
@@ -202,30 +204,36 @@ def GetLocation(var, spec_win_parent):
                     pass
 
 
-def main():
+def show_main_window():
     # destroy splash window
     LoadingWin.destroy()
 
     # Execute tkinter
     Global_Win = MainWin(Tk(className="CopernicusPi-main"))
 
-# Button setup
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(5, GPIO.IN)
 
-LoadingWin = Tk(className="CopernicusPi-loader")
-LoadingWin.configure(bg="white")
+def main():
+    # Button setup
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(5, GPIO.IN)
 
-Logo = Canvas(LoadingWin, width=300, height=300)
-Logo.pack()
+    LoadingWin = Tk(className="CopernicusPi-loader")
+    LoadingWin.configure(bg="white")
 
-Img = Image.open("./gui/CopernicusPi.png")
-Resized_Img = Img.resize((300, 300))
-Img_Canvas = ImageTk.PhotoImage(Resized_Img)
-Logo.create_image(0, 0, anchor=NW, image=Img_Canvas)
+    Logo = Canvas(LoadingWin, width=300, height=300)
+    Logo.pack()
 
-LoadingWin.attributes("-fullscreen", True)
-LoadingWin.after(3000, main)
+    Img = Image.open("./gui/CopernicusPi.png")
+    Resized_Img = Img.resize((300, 300))
+    Img_Canvas = ImageTk.PhotoImage(Resized_Img)
+    Logo.create_image(0, 0, anchor=NW, image=Img_Canvas)
 
-# Execute tkinter
-mainloop()
+    LoadingWin.attributes("-fullscreen", True)
+    LoadingWin.after(3000, show_main_window)
+
+    # Execute tkinter
+    mainloop()
+
+
+if __name__ == "__main__":
+    main()
