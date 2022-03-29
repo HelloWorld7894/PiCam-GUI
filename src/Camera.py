@@ -19,9 +19,6 @@ def CameraON_preview():
 def CameraOFF():
     Cam.stop_preview()
 
-def CameraOFF():
-    Cam.stop_preview()
-
 def Load_Settings(Settings):
     Cam.brightness = Settings[0]
     Cam.sharpness = Settings[1]
