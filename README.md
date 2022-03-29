@@ -13,7 +13,7 @@ git clone https://github.com/HelloWorld7894/CopernicusPi.git
 
 ### Install required frameworks
 ```sh
-pip3 install Pillow, picamera
+pip3 install Pillow picamera
 ```
 
 ### Install required packages
