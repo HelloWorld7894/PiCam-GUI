@@ -13,12 +13,13 @@ git clone https://github.com/HelloWorld7894/CopernicusPi.git
 
 ### Install required frameworks
 ```sh
-pip3 install Pillow picamera
+python3 -m pip install Pillow picamera
 ```
 
 ### Install required packages
 ```sh
 sudo apt install tix-dev
+sudo apt install python3-pil python3-pil.imagetk
 ```
 
 ### Modify the lightdm.conf file to hide cursor (optional)
@@ -31,5 +32,5 @@ sudoedit /etc/lightdm/lightdm.conf
 
 ## Run
 ```sh
-./src/Main.py
+python3 ./src/Main.py
 ```
